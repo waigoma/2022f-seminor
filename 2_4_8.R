@@ -10,4 +10,7 @@ college=college[,-1]
 
 # (c)
 # i. summery()
-summary(college)
+# summary(college)
+
+# ii. pairs() 関数を使って散布図行列を作成せよ
+pairs(college[,1:10])
