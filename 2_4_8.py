@@ -25,7 +25,8 @@ college = college.drop(columns=college.columns[[0]])
 # print(college.describe())
 
 # ii. pairs() 関数を使って散布図行列を作成せよ
-sns.pairplot(college.iloc[:, 1:10]).savefig('college_pairs.png')
+# sns.pairplot(college.iloc[:, 1:10]).savefig('college_pairs.png')
 
 # iii. plot() 関数で Outstate と Private の箱ひげ図を並べて作成せよ
-
+# sns.boxplot(data=college.loc[:, ["Outstate", "Private"]]).get_figure().savefig('college_boxplot.png')
+college.loc[:, ["Outstate", "Private"]].boxplot(by="Private").get_figure().savefig('college_boxplot.png')
