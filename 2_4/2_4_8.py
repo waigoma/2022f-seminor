@@ -4,7 +4,7 @@ import pandas as pd
 import seaborn as sns
 
 # 表示上限を設定
-pd.set_option('display.max_columns', 100)
+pd.set_option('display.max_columns', 1000)
 
 # (a) 関数を使ってデータを college という名前で取り込め
 college = pd.read_csv("College.csv")
@@ -37,5 +37,25 @@ college = college.drop(columns=college.columns[[0]])
 # Elite[college$Top10perc>=50]="Yes"
 # Elite=as.factor(Elite)
 # college=data.frame(college, Elite)
+elite = []
+for top10perc in college.loc[:, "Top10perc"]:
+    if top10perc >= 50:
+        elite.append("Yes")
+    else:
+        elite.append("No")
+
+college["Elite"] = elite
+
 # summary 関数でエリートの大学がいくつあるか示せ
+print(college.loc[:, "Elite"].value_counts())
+
 # plot() 関数で Outstate と Elite の箱ひげ図を並べて作成せよ
+college.loc[:, ["Outstate", "Elite"]].boxplot(by="Elite").get_figure().savefig('elite_boxplot2.png')
+
+# v. hist() 関数でいくつかの量的変数のヒストグラムを作成せよ。
+# ビンの数を変えてみること。par(mfrow=c(2,2)) が便利である。
+# これを使うとウィンドウが 4 分割され、4 つの図を同時に描くことができる。
+# また、関数に渡す引数を調整することにより、ウィンドウを分割する方法を変更することができる。
+
+
+# vi. データをさらに詳しく調べ、どのような知見を得たか説明せよ。
