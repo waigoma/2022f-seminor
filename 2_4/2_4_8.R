@@ -7,17 +7,17 @@ rownames(college)=college[,1]
 # fix(college)
 
 college=college[,-1]
-# fix(college)
+fix(college)
 
 # (c)
 # i. summery()
-# summary(college)
+summary(college)
 
 # ii. pairs() 関数を使って散布図行列を作成せよ
-# pairs(college[,1:10])
+pairs(college[,1:10])
 
 # iii. plot() 関数で Outstate と Private の箱ひげ図を並べて作成せよ
-# plot(college$Private, college$Outstate)
+plot(college$Private, college$Outstate)
 
 # iv. Top10perc 変数から新たな質的変数 Elite を作成せよ
 # 高校での成績が上位 10% だった者の割合が 50% 以上か否かによって、大学を 2 つのグループに分ける

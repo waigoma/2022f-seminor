@@ -2,9 +2,11 @@
 import pandas as pd
 # データの可視化用
 import seaborn as sns
+import matplotlib.pyplot as plt
 
 # 表示上限を設定
-pd.set_option('display.max_columns', 1000)
+pd.set_option('display.max_rows', None)
+pd.set_option('display.max_columns', None)
 
 # (a) 関数を使ってデータを college という名前で取り込め
 college = pd.read_csv("College.csv")
@@ -13,23 +15,22 @@ college = pd.read_csv("College.csv")
 # > rownames(college)=college[,1]
 # > fix(college)
 college.index = college.iloc[:, 0]
-# print(college.to_string())
+print(college.to_string())
 
 # > college=college[,-1]
 # > fix(college)
 college = college.drop(columns=college.columns[[0]])
-# print(college.to_string())
+print(college.to_string())
 
 # (c)
 # i. summery() 関数を使って数値的に要約せよ
-# print(college.describe())
+print(college.describe())
 
 # ii. pairs() 関数を使って散布図行列を作成せよ
-# sns.pairplot(college.iloc[:, 1:10]).savefig('college_pairs.png')
+sns.pairplot(college.iloc[:, 1:10]).savefig('college_pairs.png')
 
 # iii. plot() 関数で Outstate と Private の箱ひげ図を並べて作成せよ
-# sns.boxplot(data=college.loc[:, ["Outstate", "Private"]]).get_figure().savefig('college_boxplot.png')
-# college.loc[:, ["Outstate", "Private"]].boxplot(by="Private").get_figure().savefig('college_boxplot.png')
+college.loc[:, ["Outstate", "Private"]].boxplot(by="Private").get_figure().savefig('college_boxplot.png')
 
 # iv. Top10perc 変数から新たな質的変数 Elite を作成せよ
 # 高校での成績が上位 10% だった者の割合が 50% 以上か否かによって、大学を 2 つのグループに分ける
@@ -56,6 +57,24 @@ college.loc[:, ["Outstate", "Elite"]].boxplot(by="Elite").get_figure().savefig('
 # ビンの数を変えてみること。par(mfrow=c(2,2)) が便利である。
 # これを使うとウィンドウが 4 分割され、4 つの図を同時に描くことができる。
 # また、関数に渡す引数を調整することにより、ウィンドウを分割する方法を変更することができる。
+fig = plt.figure(figsize=(10, 10))
 
+ax1 = fig.add_subplot(2, 2, 1)
+ax1.hist(college.loc[:, "Apps"], bins=30)
+ax1.set_title("Apps")
+
+ax2 = fig.add_subplot(2, 2, 2)
+ax2.hist(college.loc[:, "Outstate"], bins=20)
+ax2.set_title("Outstate")
+
+ax3 = fig.add_subplot(2, 2, 3)
+ax3.hist(college.loc[:, "Top25perc"], bins=10)
+ax3.set_title("Top25perc")
+
+ax4 = fig.add_subplot(2, 2, 4)
+ax4.hist(college.loc[:, "Expend"], bins=5)
+ax4.set_title("Expend")
+
+fig.savefig('college_hist.png')
 
 # vi. データをさらに詳しく調べ、どのような知見を得たか説明せよ。
