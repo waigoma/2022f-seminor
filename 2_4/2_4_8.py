@@ -53,7 +53,7 @@ college.loc[:, ["Outstate", "Private"]].boxplot(by="Private").get_figure().savef
 # # 1000 回 実行時間測定 & 平均出力
 # time_sum = 0
 # for i in range(1000):  # for 分
-#     start = time.time()
+#     start = time.perf_counter()
 #     elite = []
 #     for top10perc in college.loc[:, "Top10perc"]:
 #         if top10perc >= 50:
@@ -61,26 +61,26 @@ college.loc[:, ["Outstate", "Private"]].boxplot(by="Private").get_figure().savef
 #         else:
 #             elite.append("No")
 #     college["Elite"] = elite
-#     time_sum += time.time() - start
+#     time_sum += time.perf_counter() - start
 #     college = college.drop(columns="Elite")
 # print("0, ", time_sum / 1000)
 #
 # time_sum = 0
 # for i in range(1000):  # 多分速い
-#     start = time.time()
+#     start = time.perf_counter()
 #     elite = ["No"] * len(college)
 #     college["Elite"] = elite
 #     college.loc[college["Top10perc"] >= 50, "Elite"] = "Yes"
-#     time_sum += time.time() - start
+#     time_sum += time.perf_counter() - start
 #     college = college.drop(columns="Elite")
 # print("1, ", time_sum / 1000)
 #
 # time_sum = 0
 # for i in range(1000):  # 行数少ない
-#     start = time.time()
+#     start = time.perf_counter()
 #     college.loc[college["Top10perc"] >= 50, "Elite"] = "Yes"
 #     college.loc[college["Top10perc"] < 50, "Elite"] = "No"
-#     time_sum += time.time() - start
+#     time_sum += time.perf_counter() - start
 #     college = college.drop(columns="Elite")
 # print("2, ", time_sum / 1000)
 
