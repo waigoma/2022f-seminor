@@ -3,6 +3,8 @@ import pandas as pd
 # データの可視化用
 import seaborn as sns
 import matplotlib.pyplot as plt
+# ベンチ用
+import time
 
 # 表示上限を設定
 pd.set_option('display.max_rows', None)
@@ -38,14 +40,55 @@ college.loc[:, ["Outstate", "Private"]].boxplot(by="Private").get_figure().savef
 # Elite[college$Top10perc>=50]="Yes"
 # Elite=as.factor(Elite)
 # college=data.frame(college, Elite)
-elite = []
-for top10perc in college.loc[:, "Top10perc"]:
-    if top10perc >= 50:
-        elite.append("Yes")
-    else:
-        elite.append("No")
 
+# for 文 ver
+# elite = []
+# for top10perc in college.loc[:, "Top10perc"]:
+#     if top10perc >= 50:
+#         elite.append("Yes")
+#     else:
+#         elite.append("No")
+# college["Elite"] = elite
+
+# # 1000 回 実行時間測定 & 平均出力
+# time_sum = 0
+# for i in range(1000):  # for 分
+#     start = time.time()
+#     elite = []
+#     for top10perc in college.loc[:, "Top10perc"]:
+#         if top10perc >= 50:
+#             elite.append("Yes")
+#         else:
+#             elite.append("No")
+#     college["Elite"] = elite
+#     time_sum += time.time() - start
+#     college = college.drop(columns="Elite")
+# print("0, ", time_sum / 1000)
+#
+# time_sum = 0
+# for i in range(1000):  # 多分速い
+#     start = time.time()
+#     elite = ["No"] * len(college)
+#     college["Elite"] = elite
+#     college.loc[college["Top10perc"] >= 50, "Elite"] = "Yes"
+#     time_sum += time.time() - start
+#     college = college.drop(columns="Elite")
+# print("1, ", time_sum / 1000)
+#
+# time_sum = 0
+# for i in range(1000):  # 行数少ない
+#     start = time.time()
+#     college.loc[college["Top10perc"] >= 50, "Elite"] = "Yes"
+#     college.loc[college["Top10perc"] < 50, "Elite"] = "No"
+#     time_sum += time.time() - start
+#     college = college.drop(columns="Elite")
+# print("2, ", time_sum / 1000)
+
+# for 使わない ver
+elite = ["No"] * len(college)
 college["Elite"] = elite
+college.loc[college["Top10perc"] >= 50, "Elite"] = "Yes"
+# college.loc[college["Top10perc"] < 50, "Elite"] = "No"
 
 # summary 関数でエリートの大学がいくつあるか示せ
 print(college.loc[:, "Elite"].value_counts())
